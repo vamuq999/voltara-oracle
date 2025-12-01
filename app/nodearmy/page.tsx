@@ -57,11 +57,15 @@ export default function NodeArmyPage() {
   const { open } = useWeb3Modal();
 
   const { data: ethBalance } = useBalance({
-    address,
-    chainId: 1, // Ethereum mainnet for now
-    watch: true,
+  address,
+  chainId: 1, // Ethereum mainnet for now
+  query: {
     enabled: !!address,
-  });
+  },
+  // you could also add: staleTime, refetchInterval, etc. inside query later
+});
+
+
 
   const [selectedNode, setSelectedNode] = useState<NodeInfo | null>(null);
 

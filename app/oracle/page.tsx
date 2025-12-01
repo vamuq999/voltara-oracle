@@ -19,7 +19,9 @@ export default function OracleVisionPage() {
   const { address, isConnected } = useAccount();
   const { writeContractAsync } = useWriteContract();
 
-  const MINT_PRICE = 10n ** 16n; // 0.01 ETH
+ // 0.01 ETH in wei (10^16)
+const MINT_PRICE = BigInt("10000000000000000");
+
 
 
 
