@@ -20,7 +20,57 @@
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: #020617; /* deep slate */
+  color: #e5e7eb;      /* light slate text */
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* === Voltara VX Shell & Cards === */
+
+.vx-shell {
+  position: relative;
+  min-height: 100vh;
+  padding-bottom: 3rem;
+  background-color: #020617; /* slate-950 base */
+  background-image:
+    radial-gradient(circle at top left, rgba(56, 189, 248, 0.25), transparent 55%),
+    radial-gradient(circle at bottom right, rgba(59, 130, 246, 0.22), transparent 55%),
+    radial-gradient(circle at top right, rgba(74, 222, 128, 0.16), transparent 50%);
+  color: #e5e7eb;
+  overflow: hidden;
+}
+
+/* subtle grid / holo overlay */
+.vx-shell::before {
+  content: "";
+  position: absolute;
+  inset: -200px;
+  background-image:
+    linear-gradient(to right, rgba(148, 163, 184, 0.14) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(148, 163, 184, 0.14) 1px, transparent 1px);
+  background-size: 60px 60px;
+  opacity: 0.25;
+  mix-blend-mode: soft-light;
+  pointer-events: none;
+}
+
+/* glassy Voltara card */
+.vx-card {
+  border-radius: 1.5rem;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.12), transparent 55%),
+              radial-gradient(circle at bottom right, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.98));
+  box-shadow:
+    0 18px 45px rgba(15, 23, 42, 0.95),
+    0 0 35px rgba(8, 145, 178, 0.25);
+  backdrop-filter: blur(24px);
+}
+
+/* softer pills for tags & stats if you want them later */
+.vx-pill-soft {
+  border-radius: 999px;
+  border: 1px solid rgba(56, 189, 248, 0.5);
+  background: radial-gradient(circle at top, rgba(34, 211, 238, 0.26), rgba(15, 23, 42, 0.9));
+  color: #e0f2fe;
+}
+
