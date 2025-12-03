@@ -84,12 +84,13 @@ export default function OracleVisionPage() {
     setIsMinting(true);
     try {
       const txHash = await writeContractAsync({
-        address: ORACLE_VISION_NFT_ADDRESS as `0x${string}`,
-        abi: ORACLE_VISION_NFT_ABI,
-        functionName: "mintOracleVision",
-        args: [],
-        value: MINT_PRICE,
-      });
+  address: ORACLE_VISION_NFT_ADDRESS as `0x${string}`,
+  abi: ORACLE_VISION_NFT_ABI,
+  functionName: "mintVision",  // ✅ match Solidity
+  args: [],
+  value: MINT_PRICE,           // 0.01 ETH, as in contract
+});
+
 
       console.log("Mint tx sent:", txHash);
       alert(
