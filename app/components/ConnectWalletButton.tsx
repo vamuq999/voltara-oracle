@@ -1,6 +1,5 @@
 // app/components/ConnectWalletButton.tsx
 "use client";
-import { ConnectWalletButton } from "../components/ConnectWalletButton";
 
 import { useEffect, useState } from "react";
 import { useAccount } from "wagmi";

@@ -1,6 +1,5 @@
 // app/oracle/page.tsx
 "use client";
-import { ConnectWalletButton } from "../components/ConnectWalletButton";
 
 import React, { useState, useEffect } from "react";
 import { useAccount, useWriteContract } from "wagmi";
@@ -8,23 +7,20 @@ import {
   ORACLE_VISION_NFT_ADDRESS,
   ORACLE_VISION_NFT_ABI,
 } from "../lib/oracleVision";
+import { ConnectWalletButton } from "../components/ConnectWalletButton";
 
-
-
+// Helper to truncate long strings (for preview title)
 function truncate(str: string, max: number) {
   if (str.length <= max) return str;
   return str.slice(0, max - 1) + "…";
 }
 
+// 0.01 ETH in wei
+const MINT_PRICE = BigInt("10000000000000000");
+
 export default function OracleVisionPage() {
   const { address, isConnected } = useAccount();
   const { writeContractAsync } = useWriteContract();
-
- // 0.01 ETH in wei (10^16)
-const MINT_PRICE = BigInt("10000000000000000");
-
-
-
 
   // Fix for hydration issues: only show wallet-dependent UI after mount
   const [mounted, setMounted] = useState(false);
@@ -40,88 +36,85 @@ const MINT_PRICE = BigInt("10000000000000000");
   const shortAddress =
     address && `${address.slice(0, 6)}…${address.slice(-4)}`;
 
+  // Call the Oracle API route to generate a response
   const handleGenerateAnswer = async () => {
-  if (!question.trim()) {
-    alert("Ask the Oracle a real question first.");
-    return;
-  }
-
-  setIsGenerating(true);
-  try {
-    const res = await fetch("/api/oracle", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ question: question.trim() }),
-    });
-
-    if (!res.ok) {
-      const text = await res.text();
-      console.error("Oracle API error:", res.status, text);
-      alert("The Oracle ran into an error. Try again in a moment.");
+    if (!question.trim()) {
+      alert("Ask the Oracle a real question first.");
       return;
     }
 
-    const data: { response: string } = await res.json();
-    setAnswer(data.response);
-  } catch (err) {
-    console.error(err);
-    alert("Network error talking to the Oracle.");
-  } finally {
-    setIsGenerating(false);
-  }
-};
+    setIsGenerating(true);
+    try {
+      const res = await fetch("/api/oracle", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ question: question.trim() }),
+      });
 
+      if (!res.ok) {
+        const text = await res.text();
+        console.error("Oracle API error:", res.status, text);
+        alert("The Oracle ran into an error. Try again in a moment.");
+        return;
+      }
 
-// Real mint – calls the OracleVisionNFT contract
+      const data: { response: string } = await res.json();
+      setAnswer(data.response);
+    } catch (err) {
+      console.error(err);
+      alert("Network error talking to the Oracle.");
+    } finally {
+      setIsGenerating(false);
+    }
+  };
 
-const handleMint = async () => {
-  if (!isConnected || !address) {
-    alert("Connect your wallet before minting.");
-    return;
-  }
-  if (!question.trim() || !answer) {
-    alert("You need a question and an oracle response before minting.");
-    return;
-  }
+  // Real mint – calls the OracleVisionNFTv2 contract on mainnet
+  const handleMint = async () => {
+    if (!isConnected || !address) {
+      alert("Connect your wallet before minting.");
+      return;
+    }
+    if (!question.trim() || !answer) {
+      alert("You need a question and an oracle response before minting.");
+      return;
+    }
 
-  setIsMinting(true);
-  try {
-    const txHash = await writeContractAsync({
-      address: ORACLE_VISION_NFT_ADDRESS as `0x${string}`,
-      abi: ORACLE_VISION_NFT_ABI,
-      functionName: "mintOracleVision",
-      args: [],
-      value: MINT_PRICE,
-    });
+    setIsMinting(true);
+    try {
+      const txHash = await writeContractAsync({
+        address: ORACLE_VISION_NFT_ADDRESS as `0x${string}`,
+        abi: ORACLE_VISION_NFT_ABI,
+        functionName: "mintOracleVision",
+        args: [],
+        value: MINT_PRICE,
+      });
 
-    console.log("Mint tx sent:", txHash);
-    alert(
-      `Mint transaction sent!\n\nTX hash:\n${txHash}\n\nWatch your wallet / explorer for confirmation.`
-    );
-  } catch (err: any) {
-    console.error(err);
-    alert(
-      `Mint failed:\n${
-        err?.shortMessage || err?.message || "Unknown error, see console."
-      }`
-    );
-  } finally {
-    setIsMinting(false);
-  }
-};
-
-
-
+      console.log("Mint tx sent:", txHash);
+      alert(
+        `Mint transaction sent!\n\nTX hash:\n${txHash}\n\nWatch your wallet / explorer for confirmation.`
+      );
+    } catch (err: any) {
+      console.error(err);
+      alert(
+        `Mint failed:\n${
+          err?.shortMessage || err?.message || "Unknown error, see console."
+        }`
+      );
+    } finally {
+      setIsMinting(false);
+    }
+  };
 
   return (
     <main className="vx-shell">
-            <div className="mb-6 flex justify-end">
+      {/* Top-right wallet button */}
+      <div className="mx-auto flex max-w-5xl justify-end px-4 pt-6">
         <ConnectWalletButton />
       </div>
 
-      <div className="relative mx-auto flex max-w-5xl flex-col gap-8 px-4 py-8 lg:py-12 z-10">
+      <div className="relative mx-auto flex max-w-5xl flex-col gap-8 px-4 py-4 lg:py-6 z-10">
         {/* Header */}
         <header className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
@@ -137,7 +130,7 @@ const handleMint = async () => {
               insight in the Voltara Codex.
             </p>
 
-            {/* ✅ Only render this after mount to avoid hydration mismatch */}
+            {/* Only render this after mount to avoid hydration mismatch */}
             {mounted && isConnected && address && (
               <div className="mt-3 flex flex-wrap items-center gap-2 text-xs text-slate-300">
                 <span className="rounded-full bg-slate-800 px-3 py-1">
@@ -284,16 +277,14 @@ const handleMint = async () => {
               </ul>
 
               <button
-
-  onClick={handleMint}
-  disabled={isMinting}
-  className="mt-4 inline-flex h-10 items-center justify-center rounded-xl bg-emerald-500 text-sm font-semibold text-slate-950 shadow-lg shadow-emerald-500/40 transition hover:bg-emerald-400 disabled:cursor-not-allowed disabled:opacity-40"
->
-  {isMinting
-    ? "Submitting mint transaction..."
-    : "Mint Oracle Vision NFT"}
-</button>
-
+                onClick={handleMint}
+                disabled={isMinting}
+                className="mt-4 inline-flex h-10 items-center justify-center rounded-xl bg-emerald-500 text-sm font-semibold text-slate-950 shadow-lg shadow-emerald-500/40 transition hover:bg-emerald-400 disabled:cursor-not-allowed disabled:opacity-40"
+              >
+                {isMinting
+                  ? "Submitting mint transaction..."
+                  : "Mint Oracle Vision NFT"}
+              </button>
             </div>
           </div>
         </section>
