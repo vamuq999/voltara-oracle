@@ -1,5 +1,6 @@
 // app/oracle/page.tsx
 "use client";
+import { ConnectWalletButton } from "../components/ConnectWalletButton";
 
 import React, { useState, useEffect } from "react";
 import { useAccount, useWriteContract } from "wagmi";
@@ -116,6 +117,10 @@ const handleMint = async () => {
 
   return (
     <main className="vx-shell">
+            <div className="mb-6 flex justify-end">
+        <ConnectWalletButton />
+      </div>
+
       <div className="relative mx-auto flex max-w-5xl flex-col gap-8 px-4 py-8 lg:py-12 z-10">
         {/* Header */}
         <header className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
