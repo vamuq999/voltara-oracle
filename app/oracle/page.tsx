@@ -9,18 +9,17 @@ import {
 } from "../lib/oracleVision";
 import { ConnectWalletButton } from "../components/ConnectWalletButton";
 
-// Helper to truncate long strings (for preview title)
 function truncate(str: string, max: number) {
   if (str.length <= max) return str;
   return str.slice(0, max - 1) + "…";
 }
 
-// 0.01 ETH in wei
-const MINT_PRICE = BigInt("10000000000000000");
-
 export default function OracleVisionPage() {
   const { address, isConnected } = useAccount();
   const { writeContractAsync } = useWriteContract();
+
+  // 0.01 ETH in wei (10^16)
+  const MINT_PRICE = BigInt("10000000000000000");
 
   // Fix for hydration issues: only show wallet-dependent UI after mount
   const [mounted, setMounted] = useState(false);
@@ -36,7 +35,6 @@ export default function OracleVisionPage() {
   const shortAddress =
     address && `${address.slice(0, 6)}…${address.slice(-4)}`;
 
-  // Call the Oracle API route to generate a response
   const handleGenerateAnswer = async () => {
     if (!question.trim()) {
       alert("Ask the Oracle a real question first.");
@@ -70,7 +68,7 @@ export default function OracleVisionPage() {
     }
   };
 
-  // Real mint – calls the OracleVisionNFTv2 contract on mainnet
+  // Real mint – calls the VoltaraVisionNFTv2 contract
   const handleMint = async () => {
     if (!isConnected || !address) {
       alert("Connect your wallet before minting.");
@@ -83,24 +81,27 @@ export default function OracleVisionPage() {
 
     setIsMinting(true);
     try {
-      const txHash = await writeContractAsync({
-  address: ORACLE_VISION_NFT_ADDRESS as `0x${string}`,
-  abi: ORACLE_VISION_NFT_ABI,
-  functionName: "mintVision",  // ✅ match Solidity
-  args: [],
-  value: MINT_PRICE,           // 0.01 ETH, as in contract
-});
+      console.log("Minting with value (wei):", MINT_PRICE.toString());
 
+      const txHash = await writeContractAsync({
+        address: ORACLE_VISION_NFT_ADDRESS as `0x${string}`,
+        abi: ORACLE_VISION_NFT_ABI,
+        functionName: "mintVision", // matches Solidity
+        args: [],
+        value: MINT_PRICE, // 0.01 ETH
+      });
 
       console.log("Mint tx sent:", txHash);
       alert(
         `Mint transaction sent!\n\nTX hash:\n${txHash}\n\nWatch your wallet / explorer for confirmation.`
       );
     } catch (err: any) {
-      console.error(err);
+      console.error("Mint error:", err);
       alert(
         `Mint failed:\n${
-          err?.shortMessage || err?.message || "Unknown error, see console."
+          err?.shortMessage ||
+          err?.message ||
+          "Unknown error, see console for details."
         }`
       );
     } finally {
@@ -110,12 +111,7 @@ export default function OracleVisionPage() {
 
   return (
     <main className="vx-shell">
-      {/* Top-right wallet button */}
-      <div className="mx-auto flex max-w-5xl justify-end px-4 pt-6">
-        <ConnectWalletButton />
-      </div>
-
-      <div className="relative mx-auto flex max-w-5xl flex-col gap-8 px-4 py-4 lg:py-6 z-10">
+      <div className="relative mx-auto flex max-w-5xl flex-col gap-8 px-4 py-8 lg:py-12 z-10">
         {/* Header */}
         <header className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
@@ -131,7 +127,7 @@ export default function OracleVisionPage() {
               insight in the Voltara Codex.
             </p>
 
-            {/* Only render this after mount to avoid hydration mismatch */}
+            {/* Wallet pill */}
             {mounted && isConnected && address && (
               <div className="mt-3 flex flex-wrap items-center gap-2 text-xs text-slate-300">
                 <span className="rounded-full bg-slate-800 px-3 py-1">
@@ -141,15 +137,18 @@ export default function OracleVisionPage() {
             )}
           </div>
 
-          <div className="rounded-2xl border border-white/5 bg-slate-900/70 px-4 py-3 text-xs text-slate-300 shadow-xl shadow-slate-950/60">
-            <p className="font-medium text-slate-100 text-[11px] uppercase tracking-[0.18em]">
-              Mint Flow
-            </p>
-            <ol className="mt-2 space-y-1 list-decimal pl-4">
-              <li>Ask the Oracle a question.</li>
-              <li>Generate & review the response.</li>
-              <li>Mint the vision as an NFT.</li>
-            </ol>
+          <div className="flex flex-col items-end gap-2">
+            <ConnectWalletButton />
+            <div className="rounded-2xl border border-white/5 bg-slate-900/70 px-4 py-3 text-xs text-slate-300 shadow-xl shadow-slate-950/60">
+              <p className="font-medium text-slate-100 text-[11px] uppercase tracking-[0.18em]">
+                Mint Flow
+              </p>
+              <ol className="mt-2 space-y-1 list-decimal pl-4">
+                <li>Ask the Oracle a question.</li>
+                <li>Generate & review the response.</li>
+                <li>Mint the vision as an NFT.</li>
+              </ol>
+            </div>
           </div>
         </header>
 
