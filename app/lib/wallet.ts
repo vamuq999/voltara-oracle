@@ -4,7 +4,7 @@ import { createWeb3Modal, defaultWagmiConfig } from "@web3modal/wagmi/react";
 import { mainnet, sepolia } from "wagmi/chains";
 
 // 1. Project ID (replace this with your real one)
-const projectId = "YOUR_WEB3MODAL_PROJECT_ID";
+const projectId = "1984373f84bb00fb0d6f6b0b2f09af8a";
 
 // 2. Chains array
 export const chains = [mainnet, sepolia] as const;
