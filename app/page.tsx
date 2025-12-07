@@ -14,9 +14,9 @@ export default function VoltaraHubPage() {
       </div>
 
       {/* HERO TITLE */}
-      <h1 className="text-5xl md:text-6xl font-bold text-center tracking-tight">
-        VOLTA<span className="text-cyan-400">Λ</span>RA HUB
-      </h1>
+      <h1 className="text-4xl font-bold">
+  VOLT(<span className="text-[#0ff] drop-shadow-[0_0_6px_#0ff]">A</span>)RA
+</h1>
 
       <p className="text-center text-slate-300 mt-4 max-w-2xl mx-auto">
         A unified interface for the Voltara ecosystem — only live, working systems are

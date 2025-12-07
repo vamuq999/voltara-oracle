@@ -5,10 +5,11 @@ import { Providers } from "./providers";
 import Link from "next/link";
 import StatusOrb from "./components/StatusOrb";
 
-export const metadata: Metadata = {
-  title: "VoltaAra Hub",
-  description: "Unified interface for the Voltara / VoltaAra ecosystem",
+export const metadata = {
+  title: "VOLT(A)RA",
+  description: "The Voltara Hub – Gateway to the Oracle, Node Army, and VX systems."
 };
+
 
 export default function RootLayout({
   children,
@@ -40,15 +41,7 @@ export default function RootLayout({
                   Oracle
                 </Link>
 
-                <Link
-                  href="/#minter"
-                  className="flex items-center gap-1 text-slate-300 hover:text-cyan-300 transition-colors"
-                >
-                  Minter
-                  <span className="text-[10px] rounded-full border border-amber-400/60 px-1.5 py-0.5 text-amber-300/80">
-                    Soon
-                  </span>
-                </Link>
+      
 
                 <Link
                   href="/node-army"
