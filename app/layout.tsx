@@ -1,10 +1,13 @@
+// app/layout.tsx
 import type { Metadata } from "next";
 import "./globals.css";
 import { Providers } from "./providers";
+import Link from "next/link";
+import StatusOrb from "./components/StatusOrb";
 
 export const metadata: Metadata = {
-  title: "Voltara",
-  description: "Voltara Platform",
+  title: "VoltaAra Hub",
+  description: "Unified interface for the Voltara / VoltaAra ecosystem",
 };
 
 export default function RootLayout({
@@ -14,19 +17,57 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-slate-950 text-slate-100">
+      <body className="bg-slate-950 text-slate-100 antialiased">
         <Providers>
-          <nav className="w-full border-b border-slate-800">
-            <div className="max-w-6xl mx-auto px-4 py-4 flex gap-6 text-sm">
-              <a href="/" className="hover:text-emerald-300">Home</a>
-              <a href="/oracle" className="hover:text-emerald-300">Oracle</a>
-              <a href="/mint" className="hover:text-emerald-300">Mint</a>
-              <a href="/truthlens" className="hover:text-emerald-300">TruthLens</a>
-              <a href="/nodearmy" className="hover:text-emerald-300">Node Army</a>
-            </div>
-          </nav>
+          <div className="min-h-screen flex flex-col">
+            {/* TOP NAV BAR */}
+            <header className="border-b border-slate-800/40 bg-slate-950/80 backdrop-blur-md shadow-[0_1px_20px_rgba(34,211,238,0.08)]">
+              <nav
+                className="
+                  mx-auto flex max-w-5xl items-center justify-center gap-8
+                  py-4 text-sm font-medium text-slate-200
+                  transition hover:shadow-[0_2px_25px_rgba(34,211,238,0.16)]
+                "
+              >
+                <Link href="/" className="hover:text-cyan-400 transition-colors">
+                  Home
+                </Link>
 
-          <main className="pt-8">{children}</main>
+                <Link
+                  href="/oracle"
+                  className="hover:text-cyan-400 transition-colors"
+                >
+                  Oracle
+                </Link>
+
+                <Link
+                  href="/#minter"
+                  className="flex items-center gap-1 text-slate-300 hover:text-cyan-300 transition-colors"
+                >
+                  Minter
+                  <span className="text-[10px] rounded-full border border-amber-400/60 px-1.5 py-0.5 text-amber-300/80">
+                    Soon
+                  </span>
+                </Link>
+
+                <Link
+                  href="/node-army"
+                  className="hover:text-cyan-400 transition-colors"
+                >
+                  Node Army
+                </Link>
+              </nav>
+            </header>
+
+            {/* MAIN APP CONTENT */}
+            <main className="flex-1 pt-6">{children}</main>
+            <StatusOrb />
+
+            {/* FOOTER (SUBTLE, OPTIONAL) */}
+            <footer className="border-t border-slate-900/60 bg-slate-950/90 py-3 text-center text-[11px] text-slate-500">
+              VoltaAra System • Voltara Labs
+            </footer>
+          </div>
         </Providers>
       </body>
     </html>

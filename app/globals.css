@@ -73,4 +73,148 @@ body {
   background: radial-gradient(circle at top, rgba(34, 211, 238, 0.26), rgba(15, 23, 42, 0.9));
   color: #e0f2fe;
 }
+/* === VoltaAra entrance animations === */
 
+@keyframes volt-fade-up {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes volt-tile-in {
+  0% {
+    opacity: 0;
+    transform: translateY(16px) scale(0.99);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Hero fade-up */
+.volt-hero-enter {
+  opacity: 0;
+  animation: volt-fade-up 0.7s ease-out forwards;
+}
+
+/* Tile entrance – base */
+.volt-tile-enter {
+  opacity: 0;
+  animation: volt-tile-in 0.6s ease-out forwards;
+}
+/* === VoltaAra tile glow auras === */
+
+.volt-tile-oracle,
+.volt-tile-node,
+.volt-tile-minter {
+  transition:
+    box-shadow 0.25s ease-out,
+    transform 0.15s ease-out;
+}
+
+/* Cyan glow for Oracle */
+.volt-tile-oracle:hover {
+  box-shadow:
+    0 0 28px rgba(34, 211, 238, 0.45),
+    0 0 70px rgba(34, 211, 238, 0.55);
+}
+
+/* Blue glow for Node Army */
+.volt-tile-node:hover {
+  box-shadow:
+    0 0 28px rgba(59, 130, 246, 0.45),
+    0 0 70px rgba(59, 130, 246, 0.55);
+}
+
+/* Violet glow for Voltara Minter */
+.volt-tile-minter:hover {
+  box-shadow:
+    0 0 28px rgba(139, 92, 246, 0.45),
+    0 0 70px rgba(139, 92, 246, 0.55);
+}
+/* === VoltaAra status heartbeat === */
+
+@keyframes volt-heartbeat {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 6px rgba(16, 185, 129, 0.6);
+  }
+  30% {
+    transform: scale(1.45);
+    box-shadow: 0 0 14px rgba(16, 185, 129, 0.9);
+  }
+  60% {
+    transform: scale(1.1);
+    box-shadow: 0 0 8px rgba(16, 185, 129, 0.7);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 6px rgba(16, 185, 129, 0.6);
+  }
+}
+
+.volt-heartbeat-dot {
+  animation: volt-heartbeat 2s ease-out infinite;
+  transform-origin: center;
+}
+/* === VoltaAra orb heartbeat === */
+
+@keyframes volt-orb-core-pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 14px rgba(16, 185, 129, 0.7);
+  }
+  40% {
+    transform: scale(1.08);
+    box-shadow: 0 0 28px rgba(16, 185, 129, 1);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 14px rgba(16, 185, 129, 0.7);
+  }
+}
+
+.volt-orb-core {
+  animation: volt-orb-core-pulse 2.8s ease-in-out infinite;
+  transform-origin: center;
+}
+/* === VoltaAra orb orbiting particles === */
+
+@keyframes volt-orbit-rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Perfect centered circular orbit */
+.volt-orbit-dot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 9999px;
+  background: rgba(56,189,248,0.9);
+  box-shadow: 0 0 10px rgba(56,189,248,1);
+}
+
+/* First electron - fast orbit */
+.volt-orbit-dot-1 {
+  transform-origin: 0 -1.75rem; /* moves orbit UP and centered */
+  animation: volt-orbit-rotate 8s linear infinite;
+}
+
+/* Second electron - slower reverse orbit */
+.volt-orbit-dot-2 {
+  transform-origin: 0 -1.75rem;
+  animation: volt-orbit-rotate 13s linear infinite reverse;
+}
