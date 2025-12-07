@@ -2,27 +2,44 @@
 
 export default function MinterPage() {
   return (
-    <div className="min-h-[70vh] flex items-center justify-center bg-gradient-to-b from-slate-950 via-slate-950 to-slate-900">
-      <div className="max-w-xl w-full mx-4 rounded-2xl border border-slate-800/70 bg-slate-950/80 p-8 shadow-[0_0_40px_rgba(15,23,42,0.9)]">
-        <p className="mb-3 inline-flex items-center gap-2 rounded-full border border-amber-400/40 bg-slate-900/80 px-3 py-1 text-[11px] font-medium text-amber-300/90">
-          <span className="h-2 w-2 rounded-full bg-amber-400 shadow-[0_0_10px_rgba(251,191,36,0.9)]" />
-          Voltara Minter — Launch Sequence Preparing
-        </p>
-
-        <h1 className="text-2xl md:text-3xl font-semibold text-slate-50 mb-3">
-          Voltara Minter
-        </h1>
-
-        <p className="text-sm md:text-base text-slate-300/90 mb-6">
-          Premium gateway into the VLTRX economy. Fixed on-chain price, designed
-          to complement the liquidity pool instead of fighting it.
-        </p>
-
-        <div className="rounded-xl border border-slate-700/70 bg-slate-900/80 px-4 py-3 text-sm text-slate-300/90">
-          This module will appear as a full page once the UX and routing are
-          production ready. For now, you can monitor status from the{" "}
-          <span className="text-cyan-300 font-medium">VoltaAra Hub</span>.
+    <div className="min-h-[80vh] bg-gradient-to-b from-slate-950 via-slate-950 to-slate-900 flex items-center justify-center px-4">
+      <div className="w-full max-w-xl space-y-6 rounded-3xl border border-slate-800/70 bg-slate-950/80 p-8 shadow-[0_0_40px_rgba(15,23,42,0.9)]">
+        {/* Pill */}
+        <div className="inline-flex items-center gap-2 rounded-full border border-slate-700 bg-slate-900/80 px-3 py-1 text-[11px] font-medium text-slate-300">
+          <span className="h-2 w-2 rounded-full bg-slate-500 shadow-[0_0_8px_rgba(148,163,184,0.9)]" />
+          Voltara Minter • Offline
         </div>
+
+        {/* Heading */}
+        <div>
+          <h1 className="text-2xl md:text-3xl font-semibold text-slate-50 mb-2">
+            VLTRX is currently in fixed-supply trading phase
+          </h1>
+          <p className="text-sm md:text-[15px] text-slate-300/90">
+            The on-chain minter is intentionally disabled for this phase. A
+            fixed allocation of VLTRX (e.g. 30M) will be used for liquidity
+            pools, incentives, and direct trading only. No new tokens are being
+            minted.
+          </p>
+        </div>
+
+        {/* Info Card */}
+        <div className="space-y-3 rounded-2xl border border-slate-800/80 bg-slate-950/80 p-4 text-sm text-slate-300/90">
+          <p>
+            This keeps the supply simple and predictable while you focus on
+            launch, trading, and building the ecosystem.
+          </p>
+          <ul className="list-disc list-inside text-[13px] text-slate-400 space-y-1">
+            <li>Fixed supply (e.g. 30M VLTRX) — no live minting.</li>
+            <li>Tokens can be allocated to LPs, partners, and community.</li>
+            <li>A future v2 minter can always be deployed later if needed.</li>
+          </ul>
+        </div>
+
+        <p className="text-[11px] text-slate-500">
+          When you&apos;re ready, this page can be upgraded to a live minting
+          interface. For now, VLTRX is a capped asset — trade and build.
+        </p>
       </div>
     </div>
   );
