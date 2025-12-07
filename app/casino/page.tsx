@@ -161,13 +161,14 @@ export default function CasinoPage() {
         </div>
 
         {/* RIGHT: STATUS */}
-        <div className="flex flex-col items-end gap-2">
-          <span className="text-xs text-slate-500">Status</span>
-          <span className="inline-flex items-center gap-1 rounded-full bg-slate-900/80 border border-slate-500/60 px-2 py-0.5 text-[11px] text-slate-300">
-            <span className="h-1.5 w-1.5 rounded-full bg-slate-400" />
-            UI Wiring Pending
-          </span>
-        </div>
+     <div className="flex flex-col items-end gap-2 pt-1">
+  <span className="text-xs text-slate-500">Status</span>
+  <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/10 border border-emerald-400/40 px-2 py-0.5 text-[11px] text-emerald-200">
+    <span className="h-1.5 w-1.5 rounded-full bg-emerald-300 animate-pulse" />
+    Online
+  </span>
+</div>
+
       </div>
     </button>
   </div>
