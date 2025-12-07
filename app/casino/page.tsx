@@ -403,42 +403,6 @@ function VoidrunPanel(props: VoidrunPanelProps) {
       </div>
     </div>
 
-
-      {/* Risk Tier Selector */}
-      <div className="space-y-2">
-        <div className="flex items-center justify-between gap-3">
-          <span className="text-xs font-medium text-slate-300 uppercase tracking-[0.18em]">
-            Risk Tier
-          </span>
-          <span className="text-[11px] text-slate-400">
-            Higher tiers = faster climb, nastier collapses.
-          </span>
-        </div>
-        <div className="flex flex-wrap gap-2">
-          <TierPill
-            label="Low Orbit"
-            sub="Conservative"
-            active={riskTier === "LOW"}
-            accent="emerald"
-            onClick={() => !isRunning && setRiskTier("LOW")}
-          />
-          <TierPill
-            label="Mid Void"
-            sub="Balanced"
-            active={riskTier === "MEDIUM"}
-            accent="cyan"
-            onClick={() => !isRunning && setRiskTier("MEDIUM")}
-          />
-          <TierPill
-            label="Deep Abyss"
-            sub="Degen"
-            active={riskTier === "HIGH"}
-            accent="violet"
-            onClick={() => !isRunning && setRiskTier("HIGH")}
-          />
-        </div>
-      </div>
-
       {/* Bet + Multiplier Row */}
       <div className="grid gap-4 md:grid-cols-[minmax(0,1.1fr)_minmax(0,1.2fr)]">
         {/* Bet Input */}
