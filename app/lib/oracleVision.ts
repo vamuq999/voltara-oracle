@@ -1,10 +1,21 @@
-// app/lib/oracleVision.ts
+// app/lib/abi/oracleVision.ts
 
-import VoltaraVisionNFTv2 from "@/app/lib/abi/VoltaraVisionNFTv2.json";
+// TODO: after you deploy OracleVision, paste the real address here.
+export const ORACLE_VISION_ADDRESS =
+  "0x0000000000000000000000000000000000000000";
 
-// On-chain address of the VoltaraVisionNFTv2 contract (mainnet)
-export const ORACLE_VISION_NFT_ADDRESS =
-  "0xab8c69c811313659cfeba270a693fcc6ce7c561f" as `0x${string}`;
-
-// ABI – the JSON file already *is* the ABI array
-export const ORACLE_VISION_NFT_ABI = VoltaraVisionNFTv2;
+// Minimal ABI with a single mint function.
+// Adjust the function name / inputs if your Solidity is different.
+export const ORACLE_VISION_ABI = [
+  {
+    inputs: [
+      { internalType: "string", name: "title", type: "string" },
+      { internalType: "string", name: "summary", type: "string" },
+      { internalType: "string", name: "rawPayload", type: "string" },
+    ],
+    name: "mintVision",
+    outputs: [{ internalType: "uint256", name: "tokenId", type: "uint256" }],
+    stateMutability: "payable", // change to "nonpayable" if your mint is free
+    type: "function",
+  },
+];
